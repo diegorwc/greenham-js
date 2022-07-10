@@ -1,0 +1,36 @@
+{
+  "obj": {
+    "ticker": "ITSA4",
+    "current_value": "8,39",
+    "dividend_yield": "6,31",
+    "ev": "5,47",
+    "pl": "5,40"
+  }
+},
+{
+  "obj": {
+    "ticker": "SAPR4",
+    "current_value": "3,59",
+    "dividend_yield": "6,59",
+    "ev": "4,38",
+    "pl": "4,44"
+  }
+},
+{
+  "obj": {
+    "ticker": "CMIN3",
+    "current_value": "3,69",
+    "dividend_yield": "23,75",
+    "ev": "2,21",
+    "pl": "4,26"
+  }
+},
+{
+  "obj": {
+    "ticker": "",
+    "current_value": "",
+    "dividend_yield": "",
+    "ev": "",
+    "pl": ""
+  }
+},

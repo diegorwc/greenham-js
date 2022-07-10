@@ -23,26 +23,29 @@ let filters = {
     ev, 
     pl
 }
+let objArray = []
 
-async function get_data(url, filter) {
+async function get_data(url, filter) {    
     try {
         const response = await axios.get(url);    
-        const $ = cheerio.load(response.data);
+        const $ = cheerio.load(response.data);        
         let obj = {}                      
         for(let item in filter) {            
             obj[item] = $(filter[item]).text()
-        }
-        console.log(obj)                            
+        }        
+        objArray.push(obj)                              
     } catch(err) {
         console.error(err)
     }    
 }
 
-function loopTickers(tickers) {
+
+async function loopTickers(tickers) {
     for(let ticker of tickers) {
         console.log(request_url + ticker)
-        get_data(request_url + ticker, filters)
-    }    
+        await get_data(request_url + ticker, filters)
+    }
+    console.log(objArray)    
 }
 
 loopTickers(tickers)

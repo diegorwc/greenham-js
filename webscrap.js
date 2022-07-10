@@ -1,5 +1,6 @@
 import axios from 'axios'
 import * as cheerio from 'cheerio'
+import fs from 'fs'
 
 // valores de seletores CSS
 const ticker = '.main-breadcrumb > li:nth-child(3) > a:nth-child(1) > span:nth-child(1)'
@@ -14,7 +15,7 @@ const pl = '.indicator-today-container > div:nth-child(1) > div:nth-child(1) > d
 // url base
 const request_url = 'https://statusinvest.com.br/acoes/'
 // tickers que serao consultados
-const tickers = ['itsa4', 'sapr4', 'cmin3', ]
+// const tickers = ['itsa4', 'sapr4', 'cmin3', ]
 // filtros que serao aplicados
 let filters = {
     ticker,
@@ -40,12 +41,22 @@ async function get_data(url, filter) {
 }
 
 
-async function loopTickers(tickers) {
+export async function loopTickers(tickers) {
     for(let ticker of tickers) {
         console.log(request_url + ticker)
         await get_data(request_url + ticker, filters)
     }
-    console.log(objArray)    
+    // console.log(JSON.stringify(objArray, null, 2))
+    writeJson(JSON.stringify(objArray, null, 2))
+    return objArray 
 }
 
-loopTickers(tickers)
+function writeJson(data) {
+    fs.writeFileSync('./data.json', data, err => {
+        if(err) console.log(err)
+        console.log('Arquivo criado')
+    });
+}
+
+
+// loopTickers(tickers)

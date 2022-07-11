@@ -24,7 +24,6 @@ let filters = {
     ev, 
     pl
 }
-let objArray = []
 
 async function get_data(url, filter) {    
     try {
@@ -34,7 +33,7 @@ async function get_data(url, filter) {
         for(let item in filter) {            
             obj[item] = $(filter[item]).text()
         }        
-        objArray.push(obj)                              
+        return obj                              
     } catch(err) {
         console.error(err)
     }    
@@ -42,9 +41,10 @@ async function get_data(url, filter) {
 
 
 export async function loopTickers(tickers) {
+    let objArray = []
     for(let ticker of tickers) {
-        console.log(request_url + ticker)
-        await get_data(request_url + ticker, filters)
+        console.log(`${request_url}${ticker}`)
+        objArray.push(await get_data(`${request_url}${ticker}`, filters))
     }
     // console.log(JSON.stringify(objArray, null, 2))
     writeJson(JSON.stringify(objArray, null, 2))

@@ -8,8 +8,7 @@ const port = 4000;
 app.use(cors());
 
 app.get('/', async (req, res) => {
-    let result = await webscrap.loopTickers(['itsa4', 'abev3', 'sapr4', 'cmin3'])
-    console.log(result)
+    let result = await webscrap.loopTickers(['itsa4', 'abev3', 'sapr4', 'cmin3'])    
     res.json(result)
 })
 

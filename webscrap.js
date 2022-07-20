@@ -24,8 +24,7 @@ let filters = {
     ev, 
     pl,
     lpa,
-    vpa,
-    margem
+    vpa,    
 }
 
 async function get_data(url, filter) {    
@@ -34,12 +33,11 @@ async function get_data(url, filter) {
         const $ = cheerio.load(response.data);        
         let obj = {}                      
         for(let item in filter) {            
-            obj[item] = $(filter[item]).text()
-        }
-        obj.lpa = obj.lpa.replace(",",".");
-        obj.vpa = obj.vpa.replace(",",".")
+            obj[item] = $(filter[item]).text().replace(",",".")
+        }        
         console.log(obj.lpa, obj.vpa)
         obj.graham = Math.sqrt(22.5 * Number(obj.lpa) * Number(obj.vpa)).toFixed(2)
+        obj.margem = (100 * ((obj.graham / obj.current_value) - 1)).toFixed(2)
         console.log(obj.graham)
         // console.log(obj.graham) 
         return obj                              

@@ -42,9 +42,8 @@ class App extends Component {
     this.callAPI();        
   }
 
-  handleResponse(obj) {
-    // console.log(obj[0].ticker)
-    // obj.map(item => console.log(item.ticker))
+  sortArray(a, b) {
+    return a.margem - b.margem;
   }
 
   render() {
@@ -68,10 +67,10 @@ class App extends Component {
               <th>EV</th>
               <th>PL</th>
               <th>Graham</th>
-              <th>Margem</th>
+              <th>Margem <button className="btn btn-light"><i className="bi bi-arrow-down-up"></i></button></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody>                 
             {this.state.apiResponse.map((item, key) => {
               return (
                 <tr key={key}>
@@ -81,6 +80,7 @@ class App extends Component {
                   <td>{item.ev}</td>
                   <td>{item.pl}</td>
                   <td>{item.graham}</td>
+                  <td>{item.margem}</td>
                 </tr>
               )
             }

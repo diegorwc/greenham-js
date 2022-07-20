@@ -67,6 +67,8 @@ class App extends Component {
               <th>DY</th>
               <th>EV</th>
               <th>PL</th>
+              <th>Graham</th>
+              <th>Margem</th>
             </tr>
           </thead>
           <tbody>
@@ -78,6 +80,7 @@ class App extends Component {
                   <td>{item.dividend_yield}</td>
                   <td>{item.ev}</td>
                   <td>{item.pl}</td>
+                  <td>{item.graham}</td>
                 </tr>
               )
             }

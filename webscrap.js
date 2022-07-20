@@ -22,7 +22,10 @@ let filters = {
     current_value,
     dividend_yield,
     ev, 
-    pl
+    pl,
+    lpa,
+    vpa,
+    margem
 }
 
 async function get_data(url, filter) {    
@@ -32,7 +35,13 @@ async function get_data(url, filter) {
         let obj = {}                      
         for(let item in filter) {            
             obj[item] = $(filter[item]).text()
-        }        
+        }
+        obj.lpa = obj.lpa.replace(",",".");
+        obj.vpa = obj.vpa.replace(",",".")
+        console.log(obj.lpa, obj.vpa)
+        obj.graham = Math.sqrt(22.5 * Number(obj.lpa) * Number(obj.vpa)).toFixed(2)
+        console.log(obj.graham)
+        // console.log(obj.graham) 
         return obj                              
     } catch(err) {
         console.error(err)
@@ -43,7 +52,7 @@ async function get_data(url, filter) {
 export async function loopTickers(tickers) {
     let objArray = []
     for(let ticker of tickers) {
-        console.log(`${request_url}${ticker}`)
+        // console.log(`${request_url}${ticker}`)
         objArray.push(await get_data(`${request_url}${ticker}`, filters))
     }
     // console.log(JSON.stringify(objArray, null, 2))

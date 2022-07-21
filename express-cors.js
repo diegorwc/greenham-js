@@ -14,5 +14,5 @@ app.get('/', async (req, res) => {
 
 
 app.listen(port, () => {
-    console.log('Porta: 3000')
+    console.log('Porta: ' + port)
 })

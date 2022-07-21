@@ -11,10 +11,12 @@ class App extends Component {
       sortFlag: false
     };
     this.handleMargemClick = this.handleMargemClick.bind(this);
+    this.sortByDividendYield = this.sorter.bind(this);
     // this.sortCrescent = this.sortCrescent.bind(this);
     // this.sortDecrescent = this.sortDecrescent.bind(this);
     this.crescent = this.crescent.bind(this);
     this.decrescent = this.decrescent.bind(this);
+
 }
 
   callAPI() {
@@ -86,6 +88,25 @@ class App extends Component {
     })
   }
 
+  sorter(classificador) {
+    console.log(classificador)
+    let sortedArray = [];    
+    if(this.state.sortFlag) {
+      // sortedArray = this.state.apiResponse.sort(this.sortCrescent)
+      sortedArray = this.crescent(classificador)
+      // console.log("sort crescent")
+    } else {
+      // sortedArray = this.state.apiResponse.sort(this.sortDecrescent)
+      sortedArray = this.decrescent(classificador)
+      // console.log("sort decrescent")
+    }
+    const changeFlag = !this.state.sortFlag
+    this.setState({
+      apiResponse: sortedArray,
+      sortFlag: changeFlag
+    })
+  }
+
   render() {
     if(!this.state.isLoaded) {
      return <div>Loading...</div>   
@@ -103,13 +124,18 @@ class App extends Component {
             <tr>
               <th>Ticker</th>
               <th>Valor Atual</th>
-              <th>DY</th>
+              <th>
+                DY
+                <button className="btn">
+                  <i className="bi bi-arrow-down-up" onClick={(param) => this.sorter('dividend_yield')}></i>
+                </button>                
+              </th>
               <th>EV</th>
               <th>PL</th>
               <th>Graham</th>
               <th>Margem 
                 <button className="btn">
-                  <i className="bi bi-arrow-down-up" onClick={this.handleMargemClick}></i>
+                  <i className="bi bi-arrow-down-up" onClick={(param) => this.sorter('margem')}></i>
                 </button>
               </th>
             </tr>

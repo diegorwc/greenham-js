@@ -15,6 +15,7 @@ const pl = '.indicator-today-container > div:nth-child(1) > div:nth-child(1) > d
 // url base
 const request_url = 'https://statusinvest.com.br/acoes/'
 let tickersArray = [] // para uso e testes de formulario
+let objArray = [] //tentativa de melhorar performance
 // tickers que serao consultados
 // const tickers = ['itsa4', 'sapr4', 'cmin3', ]
 // filtros que serao aplicados
@@ -51,6 +52,15 @@ async function get_data(url, filter) {
     }    
 }
 
+export async function getTickerData(ticker) { //tentativa de evitar percorer todos os tickers sempre que um novo é adicionado
+    let obj = await get_data(`${request_url}${ticker}`, filters);
+    objArray.push(obj)
+    return
+}
+
+export function getObjArray() {
+    return objArray;
+}
 
 export function addTicker(ticker) {
     tickersArray.push(ticker)

@@ -31,7 +31,7 @@
 table {
   border: 1px solid black;
   width: 80%;
-  margin: auto;
+  margin: 2em auto;
 }
 
 th {
@@ -41,6 +41,12 @@ th {
 td {
   border: 1px solid black;
 }
+
+.input-group {
+  width: 80%;
+  margin: auto;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

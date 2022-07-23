@@ -119,18 +119,46 @@ class App extends Component {
           <h1 className="App-title">Greenham js</h1>                    
         </header>       
         <p className="App-intro"></p>
+        <form action="http://localhost:4000/api/add" method="post">
+          <div className="input-group mb-3">
+            <input type="text" name="ticker" className="form-control"/>
+            <div className="input-group-append">
+              <button className="btn btn-outline-secondary" type="submit">Add</button>
+            </div>
+          </div>
+        </form>
+        {/* https://www.w3schools.com/howto/howto_js_curtain_menu.asp */}
         <table>
           <thead>
             <tr>
               <th>Ticker</th>
-              <th>Valor Atual</th>
+              <th>Valor Atual
+                <button className="btn">
+                  <i className="bi bi-arrow-down-up" onClick={(param) => this.sorter('current_value')}></i>
+                </button> 
+              </th>
               <th>
                 DY
                 <button className="btn">
                   <i className="bi bi-arrow-down-up" onClick={(param) => this.sorter('dividend_yield')}></i>
                 </button>                
               </th>
-              <th>EV</th>
+              <th>EV / EBIT
+                <button className="btn">
+                  <i className="bi bi-arrow-down-up" onClick={(param) => this.sorter('ev')}></i>
+                </button> 
+              </th>
+              <th>
+                ROIC
+                <button className="btn">
+                  <i className="bi bi-arrow-down-up" onClick={(param) => this.sorter('roic')}></i>
+                </button> 
+              </th>
+              <th>ROE
+                <button className="btn">
+                  <i className="bi bi-arrow-down-up" onClick={(param) => this.sorter('roe')}></i>
+                </button> 
+              </th>
               <th>PL</th>
               <th>Graham</th>
               <th>Margem 
@@ -148,8 +176,10 @@ class App extends Component {
                     <td>R$ {item.current_value}</td>
                     <td>{item.dividend_yield}%</td>
                     <td>{item.ev}</td>
+                    <td>{item.roic}%</td>
+                    <td>{item.roe}%</td>
                     <td>{item.pl}</td>
-                    <td>{item.graham}</td>
+                    <td>R$ {item.graham}</td>
                     <td>{item.margem}%</td>
                   </tr>
                 )

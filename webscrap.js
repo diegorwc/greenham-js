@@ -14,6 +14,7 @@ const roe = '.indicator-today-container > div:nth-child(1) > div:nth-child(4) > 
 const pl = '.indicator-today-container > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > strong:nth-child(1)'
 // url base
 const request_url = 'https://statusinvest.com.br/acoes/'
+let tickersArray = [] // para uso e testes de formulario
 // tickers que serao consultados
 // const tickers = ['itsa4', 'sapr4', 'cmin3', ]
 // filtros que serao aplicados
@@ -21,7 +22,9 @@ let filters = {
     ticker,
     current_value,
     dividend_yield,
-    ev, 
+    ev,
+    roic,
+    roe,
     pl,
     lpa,
     vpa,    
@@ -33,12 +36,14 @@ async function get_data(url, filter) {
         const $ = cheerio.load(response.data);        
         let obj = {}                      
         for(let item in filter) {            
-            obj[item] = $(filter[item]).text().replace(",",".")
+            obj[item] = $(filter[item]).text().replace(",",".")            
         }        
         console.log(obj.lpa, obj.vpa)
         obj.graham = Math.sqrt(22.5 * Number(obj.lpa) * Number(obj.vpa)).toFixed(2)
         obj.margem = (100 * ((obj.graham / obj.current_value) - 1)).toFixed(2)
-        console.log(obj.graham)
+        obj.roic = obj.roic.replace("%", "");
+        obj.roe = obj.roe.replace("%","");
+        console.log(obj)
         // console.log(obj.graham) 
         return obj                              
     } catch(err) {
@@ -47,8 +52,14 @@ async function get_data(url, filter) {
 }
 
 
-export async function loopTickers(tickers) {
+export function addTicker(ticker) {
+    tickersArray.push(ticker)
+    console.log(tickersArray)
+}
+
+export async function loopTickers() {
     let objArray = []
+    let tickers = tickersArray;
     for(let ticker of tickers) {
         // console.log(`${request_url}${ticker}`)
         objArray.push(await get_data(`${request_url}${ticker}`, filters))

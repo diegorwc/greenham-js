@@ -136,7 +136,7 @@ class App extends Component {
         <p className="App-intro"></p>
         <form action="http://localhost:4000/api/add" method="post">
           <div className="input-group mb-3">
-            <input type="text" name="ticker" className="form-control"/>
+            <input type="text" name="ticker" className="form-control" placeholder="CMIN3"/>
             <div className="input-group-append">
               <button className="btn btn-outline-secondary" type="submit">Add</button>
             </div>

@@ -1,6 +1,8 @@
 import axios from 'axios'
 import * as cheerio from 'cheerio'
+import { error } from 'console'
 import fs from 'fs'
+import { STATUS_CODES } from 'http'
 
 // valores de seletores CSS
 const ticker = '.main-breadcrumb > li:nth-child(3) > a:nth-child(1) > span:nth-child(1)'
@@ -33,8 +35,9 @@ let filters = {
 
 async function get_data(url, filter) {    
     try {
-        const response = await axios.get(url);    
-        const $ = cheerio.load(response.data);        
+        const response = await axios.get(url);        
+        const $ = cheerio.load(response.data);
+        console.log(typeof $)
         let obj = {}                      
         for(let item in filter) {            
             obj[item] = $(filter[item]).text().replace(",",".")            
@@ -49,7 +52,8 @@ async function get_data(url, filter) {
         // console.log(obj.graham) 
         return obj                              
     } catch(err) {
-        console.error(err)
+        console.error("erro get_data")
+        return {"erro": "ticker invalido"}
     }    
 }
 
@@ -57,8 +61,8 @@ export function removeItemFromObject(item) {
     let index = objArray.findIndex(object => {
         return object.ticker == item
     })
-    objArray.splice(index);
-    console.log(index)
+    objArray.splice(index, 1);
+    console.log(objArray)
 }
 
 export async function getTickerData(ticker) { //tentativa de evitar percorer todos os tickers sempre que um novo é adicionado

@@ -41,8 +41,9 @@ async function get_data(url, filter) {
         }        
         console.log(obj.lpa, obj.vpa)
         obj.graham = Math.sqrt(22.5 * Number(obj.lpa) * Number(obj.vpa)).toFixed(2)
-        obj.margem = (100 * ((obj.graham / obj.current_value) - 1)).toFixed(2)
+        obj.margem = (100 * ((obj.graham / obj.current_value) - 1)).toFixed(2)        
         obj.roic = obj.roic.replace("%", "");
+        if(obj.roic == "-") obj.roic = 0;
         obj.roe = obj.roe.replace("%","");
         console.log(obj)
         // console.log(obj.graham) 
@@ -50,6 +51,14 @@ async function get_data(url, filter) {
     } catch(err) {
         console.error(err)
     }    
+}
+
+export function removeItemFromObject(item) {
+    let index = objArray.findIndex(object => {
+        return object.ticker == item
+    })
+    objArray.splice(index);
+    console.log(index)
 }
 
 export async function getTickerData(ticker) { //tentativa de evitar percorer todos os tickers sempre que um novo é adicionado

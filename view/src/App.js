@@ -12,11 +12,11 @@ class App extends Component {
     };
     this.handleMargemClick = this.handleMargemClick.bind(this);
     this.sortByDividendYield = this.sorter.bind(this);
+    this.deleta = this.deleta.bind(this);
     // this.sortCrescent = this.sortCrescent.bind(this);
     // this.sortDecrescent = this.sortDecrescent.bind(this);
     this.crescent = this.crescent.bind(this);
     this.decrescent = this.decrescent.bind(this);
-
 }
 
   callAPI() {
@@ -56,6 +56,21 @@ class App extends Component {
   // sortDecrescent(a, b) {
   //   return b.margem - a.margem;
   // }
+  deleta(ticker) {
+    console.log(ticker)    
+    fetch("http://localhost:4000/api/deleta/" + ticker, {method: 'DELETE'})
+      .then((result) => {
+        console.log(result)
+        document.getElementById(ticker).remove();        
+      },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+    )
+  } 
 
   crescent(classificador) {
     return this.state.apiResponse.sort((a, b) => {
@@ -166,12 +181,16 @@ class App extends Component {
                   <i className="bi bi-arrow-down-up" onClick={(param) => this.sorter('margem')}></i>
                 </button>
               </th>
+              <th>
+                Remover
+              </th>
             </tr>
           </thead>
           <tbody>                 
             { this.state.apiResponse.map((item, key) => {
-                return (
-                  <tr key={key}>
+                console.log(key)
+                return (                  
+                  <tr key={item.ticker} id={item.ticker}>
                     <td>{item.ticker}</td>
                     <td>R$ {item.current_value}</td>
                     <td>{item.dividend_yield}%</td>
@@ -181,6 +200,11 @@ class App extends Component {
                     <td>{item.pl}</td>
                     <td>R$ {item.graham}</td>
                     <td>{item.margem}%</td>
+                    <td>
+                      <button className="btn" onClick={() => {this.deleta(item.ticker)}}>
+                        <i className="bi bi-x-square-fill"></i>
+                      </button>                    
+                    </td>
                   </tr>
                 )
               })

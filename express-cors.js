@@ -24,6 +24,13 @@ app.post('/api/add', async (req, res) => {
     res.redirect('http://localhost:3000')
 })
 
+app.delete('/api/deleta/:ticker', (req, res) => {
+    console.log("/api/deleta/" + req.params.ticker)
+    webscrap.removeItemFromObject(req.params.ticker)
+    res.sendStatus(200)
+    // res.redirect('http://localhost:3000')
+})
+
 
 app.listen(port, () => {
     console.log('Porta: ' + port)

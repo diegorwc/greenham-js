@@ -13,6 +13,7 @@ class App extends Component {
     this.handleMargemClick = this.handleMargemClick.bind(this);
     this.sortByDividendYield = this.sorter.bind(this);
     this.deleta = this.deleta.bind(this);
+    this.salvaEmArquivo = this.salvaEmArquivo.bind(this);
     // this.sortCrescent = this.sortCrescent.bind(this);
     // this.sortDecrescent = this.sortDecrescent.bind(this);
     this.crescent = this.crescent.bind(this);
@@ -70,7 +71,21 @@ class App extends Component {
           });
         }
     )
-  } 
+  }
+  
+  salvaEmArquivo() {
+    fetch("http://localhost:4000/api/save", {method: 'POST'})
+      .then((result) => {
+          console.log("Arquivo salvo!")
+      },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+    )
+  }
 
   crescent(classificador) {
     return this.state.apiResponse.sort((a, b) => {
@@ -142,6 +157,9 @@ class App extends Component {
             </div>
           </div>
         </form>
+        <button className="btn btn-outline-secondary" onClick={this.salvaEmArquivo}>
+          Salvar para arquivo
+        </button>
         {/* https://www.w3schools.com/howto/howto_js_curtain_menu.asp */}
         <table>
           <thead>

@@ -16,6 +16,11 @@ app.get('/', async (req, res) => {
     res.json(result)
 })
 
+app.post('/api/save', async(req, res) => {
+    webscrap.writeJson();
+    res.redirect('http://localhost:3000')
+})
+
 app.post('/api/add', async (req, res) => {
     // console.log(req.body)
     // webscrap.addTicker(req.body.ticker)

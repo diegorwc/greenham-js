@@ -70,8 +70,7 @@ export async function getTickerData(ticker) { //tentativa de evitar percorer tod
     let obj = await get_data(`${request_url}${ticker}`, filters);    
     console.log(typeof obj === "undefined" || obj === "")
     if(typeof obj === "undefined") return {"erro": "ticker invalido"}
-    return objArray.push(obj)
-    return
+    return objArray.push(obj)    
 }
 
 export function getObjArray() {
@@ -95,8 +94,9 @@ export async function loopTickers() {
     return objArray 
 }
 
-function writeJson(data) {
-    fs.writeFileSync('./data.json', data, err => {
+export function writeJson() {
+    let stringify = JSON.stringify(getObjArray(), null, 2)
+    fs.writeFileSync('./data.json', stringify, err => {
         if(err) console.log(err)
         console.log('Arquivo criado')
     });

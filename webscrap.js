@@ -2,7 +2,6 @@ import axios from 'axios'
 import * as cheerio from 'cheerio'
 import { error } from 'console'
 import fs from 'fs'
-import { STATUS_CODES } from 'http'
 
 // valores de seletores CSS
 const ticker = '.main-breadcrumb > li:nth-child(3) > a:nth-child(1) > span:nth-child(1)'
@@ -14,6 +13,7 @@ const ev = '.indicator-today-container > div:nth-child(1) > div:nth-child(1) > d
 const roic = '.indicator-today-container > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(3) > div:nth-child(1) > div:nth-child(2) > strong:nth-child(1)'
 const roe = '.indicator-today-container > div:nth-child(1) > div:nth-child(4) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > strong:nth-child(1)'
 const pl = '.indicator-today-container > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(2) > strong:nth-child(1)'
+const subsetor = 'div.pl-md-2:nth-child(2) > div:nth-child(1) > div:nth-child(1) > div:nth-child(2) > a:nth-child(1) > strong:nth-child(1)'
 // url base
 const request_url = 'https://statusinvest.com.br/acoes/'
 let tickersArray = [] // para uso e testes de formulario
@@ -30,7 +30,8 @@ let filters = {
     roe,
     pl,
     lpa,
-    vpa,    
+    vpa,
+    subsetor    
 }
 
 async function get_data(url, filter) {    
@@ -73,7 +74,7 @@ export async function getTickerData(ticker) { //tentativa de evitar percorer tod
     return objArray.push(obj)    
 }
 
-export function getObjArray() {
+export function getObjArray() {    
     return objArray;
 }
 
@@ -102,5 +103,18 @@ export function writeJson() {
     });
 }
 
+export function readJsonFile(filePath) {
+    console.log("=== start read json file ===")
+    let data = fs.readFileSync(filePath)
+    let dataJson = JSON.parse(data)
+    // console.log(JSON.parse(data))   
+    console.log("=== end read json file ===")
+    objArray = dataJson;
+    return dataJson;    
+}
+
+export function loadFileToObject() {
+    return objArray = readJsonFile('./data.json')
+}
 
 // loopTickers(tickers)

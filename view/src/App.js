@@ -14,6 +14,7 @@ class App extends Component {
     this.sortByDividendYield = this.sorter.bind(this);
     this.deleta = this.deleta.bind(this);
     this.salvaEmArquivo = this.salvaEmArquivo.bind(this);
+    this.lerArquivo = this.lerArquivo.bind(this);
     // this.sortCrescent = this.sortCrescent.bind(this);
     // this.sortDecrescent = this.sortDecrescent.bind(this);
     this.crescent = this.crescent.bind(this);
@@ -73,6 +74,25 @@ class App extends Component {
     )
   }
   
+
+  lerArquivo() {
+    fetch("http://localhost:4000/api/load", {method: 'GET'})
+      .then(res => res.json())
+      .then((result) => {
+        this.setState({
+          apiResponse: result
+        })
+          console.log("Arquivo lido!")
+      },
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        }
+    )
+  }
+
   salvaEmArquivo() {
     fetch("http://localhost:4000/api/save", {method: 'POST'})
       .then((result) => {
@@ -160,6 +180,9 @@ class App extends Component {
         <button className="btn btn-outline-secondary" onClick={this.salvaEmArquivo}>
           Salvar para arquivo
         </button>
+        <button className="btn btn-outline-secondary ler-arquivo" onClick={this.lerArquivo}>
+          Ler arquivo
+        </button>
         {/* https://www.w3schools.com/howto/howto_js_curtain_menu.asp */}
         <table>
           <thead>
@@ -193,6 +216,7 @@ class App extends Component {
                 </button> 
               </th>
               <th>PL</th>
+              <th>SUBSETOR</th>
               <th>Graham</th>
               <th>Margem 
                 <button className="btn">
@@ -216,8 +240,9 @@ class App extends Component {
                     <td>{item.roic}%</td>
                     <td>{item.roe}%</td>
                     <td>{item.pl}</td>
+                    <td>{item.subsetor}</td>
                     <td>R$ {item.graham}</td>
-                    <td>{item.margem}%</td>
+                    <td>{item.margem}%</td>                    
                     <td>
                       <button className="btn" onClick={() => {this.deleta(item.ticker)}}>
                         <i className="bi bi-x-square-fill"></i>

@@ -35,6 +35,11 @@ app.delete('/api/deleta/:ticker', (req, res) => {
     // res.redirect('http://localhost:3000')
 })
 
+app.get('/api/load', (req, res) => {
+    let result = webscrap.readJsonFile('./data.json')
+    res.json(result)
+})
+
 
 app.listen(port, () => {
     console.log('Porta: ' + port)

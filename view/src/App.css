@@ -46,10 +46,12 @@ td {
   width: 80%;
   margin: auto;
 }
+
 tr:hover {
   background-color: gray;
   font-weight: bold;
 }
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -57,4 +59,8 @@ tr:hover {
   to {
     transform: rotate(360deg);
   }
+}
+
+.ler-arquivo {
+  margin-left: 2em;
 }

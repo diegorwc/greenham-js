@@ -19,8 +19,7 @@ app.get('/', async (req, res) => {
 app.post('/api/add', async (req, res) => {
     // console.log(req.body)
     // webscrap.addTicker(req.body.ticker)
-    await webscrap.getTickerData(req.body.ticker)
-  
+    await webscrap.getTickerData(req.body.ticker)    
     res.redirect('http://localhost:3000')
 })
 

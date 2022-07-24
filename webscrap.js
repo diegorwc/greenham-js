@@ -36,6 +36,7 @@ let filters = {
 async function get_data(url, filter) {    
     try {
         const response = await axios.get(url);        
+        if(typeof response.data == 'undefined') throw error   
         const $ = cheerio.load(response.data);
         console.log(typeof $)
         let obj = {}                      
@@ -48,12 +49,12 @@ async function get_data(url, filter) {
         obj.roic = obj.roic.replace("%", "");
         if(obj.roic == "-") obj.roic = 0;
         obj.roe = obj.roe.replace("%","");
-        console.log(obj)
-        // console.log(obj.graham) 
+        if(obj.ticker == "") throw error                
         return obj                              
     } catch(err) {
-        console.error("erro get_data")
-        return {"erro": "ticker invalido"}
+        console.error("erro: ticker invalido")   
+        console.log(objArray)     
+        return undefined
     }    
 }
 
@@ -66,8 +67,10 @@ export function removeItemFromObject(item) {
 }
 
 export async function getTickerData(ticker) { //tentativa de evitar percorer todos os tickers sempre que um novo é adicionado
-    let obj = await get_data(`${request_url}${ticker}`, filters);
-    objArray.push(obj)
+    let obj = await get_data(`${request_url}${ticker}`, filters);    
+    console.log(typeof obj === "undefined" || obj === "")
+    if(typeof obj === "undefined") return {"erro": "ticker invalido"}
+    return objArray.push(obj)
     return
 }
 
